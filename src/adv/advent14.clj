@@ -15,7 +15,11 @@
   (->> input
        (map #(drop 1 (re-find splitter %)))
        (map  intify)
+       (map  #(cons 0 %))
        ))
+
+
+
 
 (def totaltime 2503)
 (defn dist
@@ -31,3 +35,7 @@
 
 
 (map dist lines)
+
+(sort #(> (second %1) (second %2)) (map dist lines) )
+
+lines
