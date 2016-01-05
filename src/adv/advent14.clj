@@ -15,27 +15,25 @@
   (->> input
        (map #(drop 1 (re-find splitter %)))
        (map  intify)
-       (map  #(cons 0 %))
-       ))
+       (map  #(cons 0 (  cons 0  %)))
+       (map  vec) ))
 
-
-
-
-(def totaltime 2503)
-(defn dist
-  [ [score name spd time rest]]
-  (let [
-        base (* (quot totaltime (+ time rest))
-                (* spd time))
-        resttime (mod totaltime (+ time rest))
-        addontime (min resttime time)
+(defn updatedist
+  [ tick [score dst name spd time rest] ]
+  (let [ period (+ time rest)
+        into (mod (-  period tick) period) 
+        addto (if (< time into) spd 0)
         ]
-    [name  (+ base (* addontime spd))] )
-  )
+    addto
+    ))
+
+(def rudolph [0 0 "z" 10 5 8])
+
+
 
 (let [totaltime 2503]
   (defn dist
-    [ [score name spd time rest]]
+    [ [score dst name spd time rest]]
     (let [
           base (* (quot totaltime (+ time rest))
                   (* spd time))
@@ -49,8 +47,3 @@
 
 
 
-
-(map dist lines)
-
-
-lines
