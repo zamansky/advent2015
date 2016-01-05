@@ -23,7 +23,7 @@
 
 (def totaltime 2503)
 (defn dist
-  [ [name spd time rest]]
+  [ [score name spd time rest]]
   (let [
         base (* (quot totaltime (+ time rest))
                 (* spd time))
@@ -33,9 +33,24 @@
     [name  (+ base (* addontime spd))] )
   )
 
+(let [totaltime 2503]
+  (defn dist
+    [ [score name spd time rest]]
+    (let [
+          base (* (quot totaltime (+ time rest))
+                  (* spd time))
+          resttime (mod totaltime (+ time rest))
+          addontime (min resttime time)
+          ]
+      [name  (+ base (* addontime spd))] )
+    )
+
+  (first (sort #(> (second %1) (second %2)) (map dist lines) )))
+
+
+
 
 (map dist lines)
 
-(sort #(> (second %1) (second %2)) (map dist lines) )
 
 lines
