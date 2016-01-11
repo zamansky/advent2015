@@ -18,16 +18,45 @@
        (map  #(cons 0 (  cons 0  %)))
        (map  vec) ))
 
+
 (defn updatedist
   [ tick [score dst name spd time rest] ]
   (let [ period (+ time rest)
         into (mod (-  period tick) period) 
-        addto (if (< time into) spd 0)
+        addto (if (< time into)  spd 0)
         ]
     addto
     ))
 
 (def rudolph [0 0 "z" 10 5 8])
+;; (assoc  rudolph 0  (#(updatedist 1 %) rudolph))
+(map (fn [item] (assoc item 0 (+ (item 1)
+                                 (updatedist 1 item))))
+     lines)
+
+
+;; 1084
+
+(print
+ (loop [step 1
+        l lines
+        
+        ]
+   (let [newlines (vec(map (fn [item] (assoc item 0 
+                                             (+ (item 0) (updatedist step item))
+                                             ))l ))
+         
+         sorted (vec (reverse (sort-by first newlines )))
+         winner (sorted 0)
+         winnerlist (assoc-in sorted [0 1] (inc (winner 1)))
+         ]
+     
+     (if (= step 2503)
+       winnerlist
+       (recur
+        (inc step)
+        winnerlist
+        )))))
 
 
 
@@ -43,6 +72,13 @@
       [name  (+ base (* addontime spd))] )
     )
 
+
+
+
+
+
+
+  
   (first (sort #(> (second %1) (second %2)) (map dist lines) )))
 
 
