@@ -18,19 +18,23 @@
 (def sample [20 15 10 5 5])
 
 (def data [11 30 47 31 32 36 3 1 5 3 32 36 15 11 46 26 28 1 19 3])
-  
-(defn part1 [containers target]
-  (cond (= target 0)
-        1
 
-        
+(def a (atom [] ) )
+
+(defn part1 [containers target used]
+  (cond (= target 0)
+        (do
+          (print used)
+          (swap! a concat (list used))
+          1
+          )
         (empty? containers)
         0
 
         :else 
         (+
-         (part1 (rest containers) (- target (first containers)))
-         (part1 (rest containers) target))))
+         (part1 (rest containers) (- target (first containers)) (conj used (first containers)))
+         (part1 (rest containers) target used))))
 
 
 (defn part2 [containers used target]
