@@ -32,6 +32,19 @@
          (part1 (rest containers) (- target (first containers)))
          (part1 (rest containers) target))))
 
+
+(defn part2 [containers used target]
+  (cond (= target 0)
+        used
+        (empty? containers)
+        []
+
+        :else 
+        (cons
+         (part2 (rest containers) (cons used [(first containers)]  ) (- target (first containers)))
+         (part2 (rest containers) used  target))))
+
+
 (part1 sample 25)
 (part1 data 150)
 
