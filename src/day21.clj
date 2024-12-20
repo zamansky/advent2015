@@ -48,8 +48,12 @@
       r1 rings1
       r2 rings1]
                 [w a r1 r2]))
-(def sorted-data(sort-by first (map 
-#(eval (conj (conj  (map (fn [ {:keys [cost damage armor]}] [cost damage armor]) %) +) map)) data)))
+(def sorted-data
+  (sort-by first (map 
+                  #(eval
+                    (conj (conj
+                           (map (fn [ {:keys [cost damage armor]}]
+                                  [cost damage armor]) %) +) map)) data)))
 
 ;; 104 d:8 a:1
 
