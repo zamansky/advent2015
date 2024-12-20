@@ -47,7 +47,8 @@
       a armor
       r1 rings1
       r2 rings1]
-                [w a r1 r2]))
+             [w a r1 r2]))
+
 (def sorted-data
   (sort-by first (map 
                   #(eval
@@ -55,29 +56,24 @@
                            (map (fn [ {:keys [cost damage armor]}]
                                   [cost damage armor]) %) +) map)) data)))
 
-;; 104 d:8 a:1
-
 (defn sim [hp [cost damage armor] [boss-hp boss-damage boss-armor]]
   (loop [hp hp boss-hp boss-hp]
     (cond
-
-      (<= boss-hp 0)
-      true
-      (<= hp 0)
-      false
-
+      (<= boss-hp 0) true
+      (<= hp 0) false
 
       :else
-      (recur  (- hp (max (-  boss-damage armor)0))  (- boss-hp (max 0 (-  damage  boss-armor))
-      )))))
+      (recur  (- hp (max (-  boss-damage armor)0))
+              (- boss-hp (max 0 (-  damage  boss-armor))
+                 )))))
 
-
+;; part 1
 (reduce (fn [c [cost damage armor :as next]]
           (if (sim 100 next [104 8 1])
             (reduced cost)
             cost)) sorted-data)
 
-
+;; part2 
 (reduce (fn [c [cost damage armor :as next]]
           (if (not (sim 100 next [104 8 1]))
             (reduced cost)
